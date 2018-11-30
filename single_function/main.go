@@ -1,10 +1,8 @@
 package main
 
 import (
-	"context"
 	"fmt"
 	"github.com/PuerkitoBio/goquery"
-	"github.com/olivere/elastic"
 	"net/http"
 	"regexp"
 	"strconv"
@@ -54,10 +52,12 @@ func main() {
 }
 
 func saveItem(item interface{}) {
-	client, err := elastic.NewClient(
-		elastic.SetSniff(false))
-	if err != nil {
-		panic(err)
-	}
-	client.Index().Index("dating_profile").Type("jobbole").BodyJson(item).Do(context.Background())
+
+	fmt.Println(item)
+	//client, err := elastic.NewClient(
+	//	elastic.SetSniff(false))
+	//if err != nil {
+	//	panic(err)
+	//}
+	//client.Index().Index("dating_profile").Type("jobbole").BodyJson(item).Do(context.Background())
 }
