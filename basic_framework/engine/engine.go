@@ -1,10 +1,12 @@
 package engine
 
 import (
+	"fmt"
 	"jobbole_spider/basic_framework/fetcher"
 	"log"
 )
 
+// 不定长参数
 func Run(seeds ...Request) {
 	var requests []Request
 	for _, r := range seeds {
@@ -24,10 +26,11 @@ func Run(seeds ...Request) {
 		}
 
 		parserResult := r.ParserFunc(reader)
-		// ... 就是把这个切片展开一个个加进去
+		// ... 就是把这个切片展开一个个加进去,理解成拆包
 		requests = append(requests, parserResult.Requests...)
 		for _, item := range parserResult.Items {
-			log.Fatalf("got item %v", item)
+			//log.Fatalf("got item %v", item)
+			fmt.Printf("got item %v", item)
 		}
 	}
 }

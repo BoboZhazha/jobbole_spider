@@ -22,7 +22,6 @@ func ParseArticleList(reader io.Reader) engine.ParserResult {
 		panic(err)
 	}
 	result := engine.ParserResult{}
-	var items []interface{}
 
 	doc.Find("#archive").Find(".post.floated-thumb").Each(func(i int, selection *goquery.Selection) {
 		title := selection.Find("a.archive-title").Text()
@@ -34,12 +33,12 @@ func ParseArticleList(reader io.Reader) engine.ParserResult {
 		content := selection.Find("span.excerpt").Text()
 		item := Item{Title: title, Url: href, ImageUrl: imageUrl, Date: date, Content: content}
 
-		items = append(result.Items, item)
-		result.Items = items
+		result.Items = append(result.Items, item)
 
+		// 每个list页面解析出来多个detail页的Request
 		result.Requests = append(result.Requests, engine.Request{
 			Url:        href,
-			ParserFunc: engine.NilParser,
+			ParserFunc: ParseArticleDetail,
 		})
 	})
 	return result
