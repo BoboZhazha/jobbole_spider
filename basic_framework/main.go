@@ -3,6 +3,7 @@ package main
 import (
 	"jobbole_spider/basic_framework/engine"
 	"jobbole_spider/basic_framework/jobbole/parser"
+	"jobbole_spider/basic_framework/scheduler"
 	"strconv"
 )
 
@@ -32,6 +33,7 @@ func main() {
 	//	},
 	//)
 
-	engine.Run(seeds...)
+	e := engine.ConcurrentEngine{Scheduler: &scheduler.SimpleScheduler{}, WorkerCount: 100}
+	e.Run(seeds...)
 
 }
